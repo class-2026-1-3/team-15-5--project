@@ -1,3 +1,4 @@
+import os
 import uvicorn
 import pymysql
 from fastapi import FastAPI, HTTPException
@@ -15,8 +16,9 @@ app.add_middleware(
 )
 
 def get_db_connection():
+    db_host = os.getenv("DB_HOST", "localhost")
     return pymysql.connect(
-        host='localhost',
+        host=db_host,
         user='root',
         password='password',
         database='busomago_ec2',
