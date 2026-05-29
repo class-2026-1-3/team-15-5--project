@@ -49,3 +49,22 @@ CREATE TABLE billing
   FOREIGN KEY (user_id) REFERENCES user (user_id),
   FOREIGN KEY (instance_id) REFERENCES instance (id)
 );
+
+INSERT INTO user (username, password, role, status) VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'ADMIN', 1), -- admin
+('satellite4245', '2d13fc8d186f85ad818817d856068ce6c0c500c1d4e4dbf7b72e725f701e6a70', 'USER', 1), -- hanstar1009.
+('shit', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'USER', 2), -- 1234
+('junior', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'USER', 3); -- 1234
+
+INSERT INTO server_spec (name, pr_name, pr_core, ram_gb, storage_gb, cost) VALUES
+('t2.nano', 'Intel Xeon E5-2676 v3', 1, 1, 8, 0.0058),
+('t2.micro', 'Intel Xeon E5-2676 v3', 1, 1, 8, 0.0116),
+('t2.small', 'Intel Xeon E5-2676 v3', 1, 2, 20, 0.0230),
+('t2.medium', 'Intel Xeon E5-2676 v3', 2, 4, 40, 0.0464),
+('m5.large', 'Intel Xeon Platinum 8175', 2, 8, 100, 0.0960),
+('c5.xlarge', 'Intel Xeon Platinum 8275L', 4, 8, 200, 0.1700),
+('r5.2xlarge', 'Intel Xeon Platinum 8175M', 8, 64, 500, 0.5040),
+('p3.2xlarge (GPU)', 'NVIDIA Tesla V100', 8, 61, 1000, 3.0600),
+('Raspberry Pi 4B (Edge)', 'Broadcom BCM2711 SoC', 4, 4, 32, 0.0050),
+('c5.4xlarge', 'Intel® Xeon® Gold 6544Y', 16, 32, 1024, 1),
+('c193.large', 'AMD EPYC™ 9754', 32, 256, 1024, 3.5),
+('c323.2xlarge', 'AMD EPYC™ 9709', 32, 256, 1024, 3.5);

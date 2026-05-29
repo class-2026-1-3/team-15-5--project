@@ -1,6 +1,7 @@
 import os
 import uvicorn
 import pymysql
+import hashlib
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -34,7 +35,8 @@ def login(data: LoginRequest):
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (data.username, data.password))
+            hashed_password = hashlib.sha256(data.password.encode('utf-8')).hexdigest()
+            cursor.execute("SELECT * FROM user WHERE username = %s AND password = %s", (data.username, hashed_password))
             user = cursor.fetchone()
             if user:
                 return {"success": True, "message": "Login successful", "user_id": user["user_id"]}
