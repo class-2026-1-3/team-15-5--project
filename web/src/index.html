@@ -72,7 +72,7 @@
                 // 로그인 성공 시 sessionStorage에 토큰 저장
                 sessionStorage.setItem('token', 'dummy-token-' + result.user_id);
                 sessionStorage.setItem('username', usernameVal);
-                window.location.href = "/main.html";
+                window.location.href = "/main";
             } else {
                 alert(result.detail || "Login failed")
             }

@@ -16,7 +16,7 @@
         // 페이지 렌더링 전 로그인 토큰 검증
         if (!sessionStorage.getItem('token')) {
             alert("로그인이 필요한 서비스입니다.");
-            window.location.href = "/index.html";
+            window.location.href = "/index";
         }
     </script>
 </head>
@@ -70,7 +70,7 @@
         function logout(event) {
             event.preventDefault();
             sessionStorage.removeItem('token');
-            window.location.href = " /index.html";
+            window.location.href = " /index";
         } document.addEventListener("DOMContentLoaded", () => {
             const username = sessionStorage.getItem('username');
             if (username) {
