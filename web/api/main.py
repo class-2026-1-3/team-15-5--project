@@ -44,6 +44,24 @@ def login(data: LoginRequest):
     finally:
         connection.close()
 
+class SpecRequest(BaseModel):
+    id:int
+    pr_name:str
+
+@app.get("/spec")
+def specs(data: SpecRequest):
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cur:
+            cur.execute("SELECT * FROM server_spec WHERE id = %s AND pr_name = %s", (data.id, data.pr_name))
+            spec = cur.fetchone()
+            if spec:
+                return {"success":True,"spec":spec}
+            else:
+                raise HTTPException(status_code=404, detail="Spec not found")
+    finally:
+        connection.close()
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0",port=6974, reload=True)
