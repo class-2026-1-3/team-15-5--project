@@ -21,10 +21,12 @@ body {
 
 /* Premium Navbar Styling */
 .navbar-custom {
-    background-color: rgba(15, 23, 42, 0.85); /* 프리미엄 다크 슬레이트 배경 */
+    background-color: rgba(15, 23, 42, 0.85);
+    /* 프리미엄 다크 슬레이트 배경 */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* 하얀 선 대신 어두운 보더 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /* 하얀 선 대신 어두운 보더 */
     padding: 12px 0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
@@ -46,7 +48,8 @@ body {
 }
 
 .navbar-custom .nav-link {
-    color: #94a3b8; /* 밝은 회색으로 텍스트 대비 향상 */
+    color: #94a3b8;
+    /* 밝은 회색으로 텍스트 대비 향상 */
     font-weight: 500;
     font-size: 0.95rem;
     padding: 8px 16px !important;
@@ -108,4 +111,83 @@ body {
     font-style: normal;
     color: white;
     font-size: 3vw;
+}
+
+.sub-container {
+    margin-top: 25px;
+    width: 100%;
+}
+
+.introduce-card {
+    width: 95%;
+    margin: 0 auto;
+    background-color: #f0eee9;
+    border-radius: 15px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.introduce-card h1 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    text-align: center;
+    margin-bottom: 25px;
+    color: #1e293b;
+}
+
+/* 카드들을 배치하는 Flexbox 래퍼 */
+.introduce-cards-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+}
+
+.introduce-cards {
+    flex: 1;
+    min-height: 280px; /* 고정 높이 대신 최소 높이로 변경 */
+    background-color: #ffffff; /* 가독성을 위한 깔끔한 흰색 카드 디자인 */
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.introduce-cards-header {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+    margin-bottom: 0;
+    color: #0f172a;
+}
+
+.introduce-cards-header_2 {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: clamp(0.9rem, 1vw, 1.1rem);
+    margin-top: -5px;
+    color: #64748b;
+}
+
+.introduce-cards-paragraph {
+    font-family: "IBM Plex Sans KR", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: clamp(0.9rem, 1.1vw, 1.15rem);
+    margin: 0;
+    color: #475569;
+    line-height: 1.5;
+}
+
+/* 화면 크기가 992px보다 작을 때 (태블릿/모바일) */
+@media (max-width: 992px) {
+    .introduce-cards-wrapper {
+        flex-direction: column; /* 세로 배열로 변경 */
+        gap: 15px;
+    }
 }
