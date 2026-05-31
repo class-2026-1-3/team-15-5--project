@@ -15,21 +15,17 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <div class="login-container">
-        <form id="loginForm" class="login-box">
+        <form id="loginForm" class="login-box needs-validation" novalidate>
             <h1 class="title">Login</h1>
-            <div id="errorAlert" class="alert alert-danger align-items-center py-2 px-3 mt-2 mb-0" role="alert"
-                style="display: none;">
-                <i class="fa-solid fa-triangle-exclamation me-2"></i>
-                <div id="errorMessage">
-                    An example danger alert with an icon
-                </div>
-            </div>
             <div class="input-group input-group-lg email-input">
                 <span class="input-group-text" id="visible-addon">
                     <i class="fa-solid fa-user"></i>
                 </span>
                 <input type="text" id="username" class="form-control" placeholder="Username" aria-label="Username"
                     aria-describedby="visible-addon" required>
+                <div class="invalid-feedback">
+                    아이디를 입력해주세요.
+                </div>
             </div>
             <div class="input-group input-group-lg password-input">
                 <span class="input-group-text" id="password-icon">
@@ -37,6 +33,9 @@
                 </span>
                 <input type="password" id="password" class="form-control" placeholder="Password" aria-label="Password"
                     aria-describedby="password-icon" required>
+                <div class="invalid-feedback">
+                    비밀번호를 입력해주세요.
+                </div>
             </div>
             <button type="submit" id="loginBtn" class="btn login-button">Login</button>
         </form>
@@ -51,21 +50,41 @@
         }
     })
 
+    // 입력창 값 변경 시 에러 경고 상태(!) 초기화
+    document.getElementById('username').addEventListener('input', (e) => {
+        e.target.setCustomValidity("");
+        e.target.nextElementSibling.textContent = "아이디를 입력해주세요.";
+    });
+
+    document.getElementById('password').addEventListener('input', (e) => {
+        e.target.setCustomValidity("");
+        e.target.nextElementSibling.textContent = "비밀번호를 입력해주세요.";
+    });
+
     document.getElementById('loginForm').addEventListener('submit', async (event) => {
         event.preventDefault(); // 폼 제출 시 브라우저가 새로고침되는 기본 동작을 막음
 
-        // 에러 알림창 초기화
-        const errorAlert = document.getElementById('errorAlert');
-        errorAlert.style.display = "none";
+        const form = event.currentTarget;
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        // 새로운 제출 시 기존 커스텀 에러 상태(!) 초기화
+        usernameInput.setCustomValidity("");
+        passwordInput.setCustomValidity("");
+        usernameInput.nextElementSibling.textContent = "아이디를 입력해주세요.";
+        passwordInput.nextElementSibling.textContent = "비밀번호를 입력해주세요.";
+
+        // Bootstrap 검증 클래스 추가 (색상 강조)
+        form.classList.add('was-validated');
+
+        // 입력 폼 유효성 검사 실패 시 중단
+        if (!form.checkValidity()) {
+            event.stopPropagation();
+            return;
+        }
 
         const usernameVal = document.getElementById('username').value;
         const passwordVal = document.getElementById('password').value;
-
-        if (!usernameVal || !passwordVal) {
-            document.getElementById('errorMessage').textContent = "아이디와 비밀번호를 모두 입력해주세요.";
-            errorAlert.style.display = "flex";
-            return;
-        }
 
         try {
             const response = await fetch('http://localhost:6974/login', {
@@ -85,8 +104,14 @@
                 sessionStorage.setItem('username', usernameVal);
                 window.location.href = "/main";
             } else {
-                document.getElementById('errorMessage').textContent = result.detail || "Login failed";
-                errorAlert.style.display = "flex";
+                // 로그인 실패 시 input창을 경고 상태(!)로 변환
+                const usernameInput = document.getElementById('username');
+                const passwordInput = document.getElementById('password');
+
+                usernameInput.setCustomValidity("Invalid");
+                passwordInput.setCustomValidity("Invalid");
+                usernameInput.nextElementSibling.textContent = "아이디를 확인해주세요.";
+                passwordInput.nextElementSibling.textContent = "비밀번호를 확인해주세요.";
             }
 
         } catch (e) {
