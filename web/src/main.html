@@ -101,10 +101,14 @@
                             <p class="introduce-cards-header_2">t2.micro</p>
                             <div class="spec-price">$0.0116 <span class="price-unit">/ hour</span></div>
                             <hr class="spec-divider">
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-primary"></i> 1 vCPU</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-primary"></i> 1 GB RAM</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-hard-drive me-2 text-primary"></i> 8 GB SSD</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-network-wired me-2 text-primary"></i> 기본 네트워크</p>
+                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-primary"></i> 1
+                                vCPU</p>
+                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-primary"></i> 1
+                                GB RAM</p>
+                            <p class="introduce-cards-paragraph"><i
+                                    class="fa-solid fa-hard-drive me-2 text-primary"></i> 8 GB SSD</p>
+                            <p class="introduce-cards-paragraph"><i
+                                    class="fa-solid fa-network-wired me-2 text-primary"></i> 기본 네트워크</p>
                             <button class="btn btn-spec mt-auto">선택하기</button>
                         </div>
                         <!-- Standard Tier (Popular) -->
@@ -114,10 +118,14 @@
                             <p class="introduce-cards-header_2">t2.medium</p>
                             <div class="spec-price">$0.0464 <span class="price-unit">/ hour</span></div>
                             <hr class="spec-divider">
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-success"></i> 2 vCPUs</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-success"></i> 4 GB RAM</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-hard-drive me-2 text-success"></i> 40 GB SSD</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-network-wired me-2 text-success"></i> 5 Gbps 네트워크</p>
+                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-success"></i> 2
+                                vCPUs</p>
+                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-success"></i> 4
+                                GB RAM</p>
+                            <p class="introduce-cards-paragraph"><i
+                                    class="fa-solid fa-hard-drive me-2 text-success"></i> 40 GB SSD</p>
+                            <p class="introduce-cards-paragraph"><i
+                                    class="fa-solid fa-network-wired me-2 text-success"></i> 5 Gbps 네트워크</p>
                             <button class="btn btn-spec active-spec mt-auto">선택하기</button>
                         </div>
                         <!-- GPU Tier -->
@@ -126,41 +134,35 @@
                             <p class="introduce-cards-header_2">p3.2xlarge</p>
                             <div class="spec-price">$3.0600 <span class="price-unit">/ hour</span></div>
                             <hr class="spec-divider">
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-danger"></i> 8 vCPUs (NVIDIA V100)</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-danger"></i> 61 GB RAM</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-hard-drive me-2 text-danger"></i> 1000 GB SSD</p>
-                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-network-wired me-2 text-danger"></i> 10 Gbps 고성능 네트워크</p>
+                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-danger"></i> 8
+                                vCPUs (NVIDIA V100)</p>
+                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-danger"></i> 61
+                                GB RAM</p>
+                            <p class="introduce-cards-paragraph"><i class="fa-solid fa-hard-drive me-2 text-danger"></i>
+                                1000 GB SSD</p>
+                            <p class="introduce-cards-paragraph"><i
+                                    class="fa-solid fa-network-wired me-2 text-danger"></i> 10 Gbps 고성능 네트워크</p>
                             <button class="btn btn-spec mt-auto">선택하기</button>
                         </div>
                     </div>
                 </div>
+        </div>
+    </div>
+
+    <!-- 푸터 추가 -->
+    <footer class="footer mt-5 py-4">
+        <div class="container text-center">
+            <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
+            <div class="mt-2">
+                <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i>
+                    GitHub</a>
+                <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i> Contact
+                    Us</a>
             </div>
         </div>
+    </footer>
 
-        <!-- 푸터 추가 -->
-        <footer class="footer mt-5 py-4">
-            <div class="container text-center">
-                <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
-                <div class="mt-2">
-                    <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i> GitHub</a>
-                    <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i> Contact Us</a>
-                </div>
-            </div>
-        </footer>
-
-        <script>
-            // 로그아웃 처리 함수
-            function logout(event) {
-                event.preventDefault();
-                sessionStorage.removeItem('token');
-                window.location.href = " /index";
-            } document.addEventListener("DOMContentLoaded", () => {
-                const username = sessionStorage.getItem('username');
-                if (username) {
-                    document.querySelector('.username-display').textContent = username;
-                }
-            });
-        </script>
+    <script src="main.js"></script>
 </body>
 
 </html>
