@@ -57,7 +57,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
             // 로그인 성공 시 sessionStorage에 토큰 저장
             sessionStorage.setItem('token', 'dummy-token-' + result.user_id);
             sessionStorage.setItem('username', usernameVal);
-            window.location.href = "/main";
+            window.location.href = "/kr/main";
         } else {
             // 로그인 실패 시 input창을 경고 상태(!)로 변환
             const usernameInput = document.getElementById('username');

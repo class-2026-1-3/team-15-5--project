@@ -10,6 +10,7 @@ body {
 /* Premium Navbar Styling */
 .navbar-custom {
     background-color: rgba(15, 23, 42, 0.85);
+
     /* 프리미엄 다크 슬레이트 배경 */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
