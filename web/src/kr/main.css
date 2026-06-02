@@ -22,11 +22,11 @@
 }
 
 .header-text {
-    font-family: 'Orbit', sans-serif;
-    font-weight: 400;
+    font-family: 'Asta Sans', sans-serif;
+    font-weight: 600;
     font-style: normal;
     color: white;
-    font-size: 3vw;
+    font-size: 4vw;
 }
 
 .sub-container {
@@ -194,4 +194,13 @@
 .active-spec:hover {
     background-color: #02365a;
     border-color: #02365a;
+}
+
+.engCase {
+    margin-right: 1vw;
+    padding: 1px;
+    background-color: #92a8d1;
+    width: 3vw;
+    height: 3vh;
+    border-radius: 30px;
 }
