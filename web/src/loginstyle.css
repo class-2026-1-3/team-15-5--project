@@ -51,12 +51,13 @@ body {
 }
 
 .btn.login-button:hover {
-    background-color: #034f84;
+    background-color: #92a8d1;
+    border: 2px solid #92a8d1;
     color: white;
 }
 
 .btn.login-button:active {
-    background-color: #92a8d1;
-    border: 2px solid #92a8d1;
+    background-color: #5d6a84;
+    border: 2px solid #5d6a84;
     color: white;
 }

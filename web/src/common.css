@@ -85,6 +85,18 @@ body {
     box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
 }
 
+.engCase {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-right: 15px;
+    text-align: center;
+}
+
 /* Footer Styling */
 .footer {
     background-color: rgba(15, 23, 42, 0.9);

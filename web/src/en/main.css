@@ -176,7 +176,9 @@
     position: absolute;
     top: 12px;
     right: 12px;
-    background: linear-gradient(135deg, #034f84 0%, #92a8d1 100%);
+    background: linear-gradient(135deg, #034f84 0%, #92a8d1 50%, #f7caca 100%);
+    background-size: 200% 100%;
+    background-position: left center;
     color: #ffffff;
     font-size: 0.75rem;
     font-weight: 700;
@@ -184,6 +186,11 @@
     border-radius: 12px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    transition: background-position 0.3s cubic-bezier(0.82, 0.16, 0.00, 1.00);
+}
+
+.standard-tier:hover .badge-popular {
+    background-position: right center;
 }
 
 .active-spec {

@@ -51,10 +51,11 @@
                             <a class="nav-link" href="#"><i class="fa-solid fa-receipt me-1"></i> Billing</a>
                         </li>
                     </ul>
-                    <div class="d-flex align-items-center engCase">
-                        Eng
-                    </div>
                     <div class="d-flex align-items-center">
+                        <button class="d-flex align-items-center engCase" onclick="window.location.href='/en/main'">
+                            <i class="fa-solid fa-globe me-1"></i>
+                            Eng
+                        </button>
                         <span class="user-profile me-3"><i class="fa-solid fa-circle-user me-1"></i>
                             <span class="username-display">Undefined</span>
                         </span>
@@ -67,7 +68,7 @@
         </nav>
         <div class="header-texts">
             <h1 class="header-text">Clearly Convenient Cloud Infrastructure</h1>
-            <h2 class="header-text" style="font-size: 1.8vw;font-weight: 400;"">더 빠르고 편리하게 구축해보십시오, Serenity와 함꼐.</h2>
+            <h2 class="header-text" style="font-size: 1.8vw;font-weight: 400;"">더 빠르고 편리하게 구축해보십시오, Serenity와 함께.</h2>
         </div>
     </div>
         <div class=" sub-container">
@@ -119,8 +120,8 @@
                             <button class="btn btn-spec mt-auto">선택하기</button>
                         </div>
                         <!-- Standard Tier (Popular) -->
-                        <div class="introduce-cards spec-card standard-tier">
-                            <div class="badge-popular">Popular</div>
+                        <div class="introduce-cards spec-card standard-tier" id="standard">
+                            <div class="badge-popular" id="popular">Popular</div>
                             <h2 class="introduce-cards-header">Standard Tier</h2>
                             <p class="introduce-cards-header_2">t2.medium</p>
                             <div class="spec-price">$0.0464 <span class="price-unit">/ hour</span></div>
