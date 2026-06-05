@@ -75,11 +75,13 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    border: 2px solid transparent;
 }
 
 .introduce-cards:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -5px rgba(0, 0, 0, 0.1);
+    border-color: #92a8d1;
 }
 
 .introduce-cards-header {
@@ -162,7 +164,7 @@
 }
 
 .btn-spec:hover {
-    background-color: #034f84;
+    background-color: #92a8d1;
     color: #ffffff;
 }
 
@@ -194,11 +196,7 @@
 }
 
 .active-spec {
-    background-color: #034f84;
-    color: #ffffff;
-}
-
-.active-spec:hover {
-    background-color: #02365a;
-    border-color: #02365a;
+    background-color: #92a8d1;
+    border-color: #92a8d1;
+    color: white;
 }
