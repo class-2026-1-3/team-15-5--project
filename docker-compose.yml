@@ -1,5 +1,7 @@
 version: '3.8'
 
+name : serenity-docker
+
 services:
   db:
     image: mysql:8.0
