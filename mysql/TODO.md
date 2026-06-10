@@ -3,6 +3,6 @@
 [ ] jot댐
 ### 2026/05/28
 ---
-[X] Making "user" Table
+[X] Making Table
 [ ] Making dockerfile
 [ ] Modify docker-compose.yml

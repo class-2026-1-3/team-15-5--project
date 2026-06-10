@@ -1,3 +1,4 @@
 mysql/data/
 .env
 ec2.vuerd.json
+.DS_Store

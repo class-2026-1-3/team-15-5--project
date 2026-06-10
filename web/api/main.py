@@ -1,6 +1,6 @@
 import os
-import uvicorn
 import pymysql
+import hashlib
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -34,12 +34,31 @@ def login(data: LoginRequest):
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM users WHERE username = %s AND password = %s", (data.username, data.password))
+            hashed_password = hashlib.sha256(data.password.encode('utf-8')).hexdigest()
+            cursor.execute("SELECT * FROM user WHERE username = %s AND password = %s", (data.username, hashed_password))
             user = cursor.fetchone()
             if user:
                 return {"success": True, "message": "Login successful", "user_id": user["user_id"]}
             else:
                 raise HTTPException(status_code=401, detail="Invalid username or password")
+    finally:
+        connection.close()
+
+class SpecRequest(BaseModel):
+    id:int
+    pr_name:str
+
+@app.get("/spec")
+def specs(data: SpecRequest):
+    connection = get_db_connection()
+    try:
+        with connection.cursor() as cur:
+            cur.execute("SELECT * FROM server_spec WHERE id = %s AND pr_name = %s", (data.id, data.pr_name))
+            spec = cur.fetchone()
+            if spec:
+                return {"success":True,"spec":spec}
+            else:
+                raise HTTPException(status_code=404, detail="Spec not found")
     finally:
         connection.close()
 

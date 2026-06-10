@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: ec2_mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: busomago_ec2
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+
+  api:
+    build:
+      context: ./web/api
+      dockerfile: dockerfile
+    container_name: ec2_backend_api
+    restart: always
+    ports:
+      - "6974:6974"
+    environment:
+      - DB_HOST=db
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./web/src
+      dockerfile: dockerfile
+    container_name: ec2_frontend
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web/src:/usr/share/nginx/html
+    depends_on:
+      - api
+
+volumes:
+  db_data:

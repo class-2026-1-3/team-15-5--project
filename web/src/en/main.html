@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="../common.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Orbit&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <script>
+        // 페이지 렌더링 전 로그인 토큰 검증
+        if (!sessionStorage.getItem('token')) {
+            alert("This service is require login.");
+            window.location.href = "/index";
+        }
+    </script>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <div class='main-container'>
+        <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center" href="/en/main">
+                    <img src="../images/logo.png" alt="logo" width="40" height="40" class="me-2 brand-logo">
+                    <span class="brand-text">Serenity</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/en/instance"><i class="fa-solid fa-server me-1"></i>
+                                Instances</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-microchip me-1"></i> Specs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fa-solid fa-receipt me-1"></i> Billing</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <button class="d-flex align-items-center engCase" onclick="window.location.href='/kr/main'">
+                            <i class="fa-solid fa-globe me-1"></i>
+                            한국어
+                        </button>
+                        <span class="user-profile me-3"><i class="fa-solid fa-circle-user me-1"></i>
+                            <span class="username-display">Undefined</span>
+                        </span>
+                        <a href="#" class="btn btn-logout" onclick="logout(event)">
+                            <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="header-texts">
+            <h1 class="header-text">Clearly Convenient Cloud Infrastructure</h1>
+            <h2 class="header-text" style="font-weight: 200; font-size: 1.8vw;">Fast Build, More conveniently, With
+                "Serenity"</h2>
+        </div>
+    </div>
+    <div class=" sub-container">
+        <div class="introduce-card">
+            <h1>Why Serenity?</h1>
+            <div class="introduce-cards-wrapper">
+                <div class="introduce-cards">
+                    <h2 class="introduce-cards-header">빠르게. 친근하게. 혁신적이게.</h2>
+                    <p class="introduce-cards-header_2">Faster, Frontier, Friendly</p>
+                    <p class="introduce-cards-paragraph">Experience 10Gbps Network. Everyday, Everytime.</p>
+                    <p class="introduce-cards-paragraph">Convenient for everyone with harmony of CLI and GUI.</p>
+                    <p class="introduce-cards-paragraph">An endless frontier. Feel Serenity, With "Serenity".</p>
+                </div>
+                <div class="introduce-cards">
+                    <h2 class="introduce-cards-header">강력하고 든든한 인프라.</h2>
+                    <p class="introduce-cards-header_2">Powerful Infra.</p>
+                    <p class="introduce-cards-paragraph">AI computation comes standard.</p>
+                    <p class="introduce-cards-paragraph">From databases to web servers,</p>
+                    <p class="introduce-cards-paragraph">Everything you need, built on one foundation.</p>
+                </div>
+                <div class="introduce-cards">
+                    <h2 class="introduce-cards-header">AI 시대를 위한 똑똑한 관제탑.</h2>
+                    <p class="introduce-cards-header_2">A smart control tower for the AI Era.</p>
+                    <p class="introduce-cards-paragraph">Manage all resources at a glance on the Serenity's dashboard.
+                    </p>
+                    <p class="introduce-cards-paragraph">Easy infrastructure management with real-time monitoring and
+                        automation.</p>
+                    <p class="introduce-cards-paragraph">Optimize workflows from AI model training to deployment.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 추천 서버 스펙 및 요금제 섹션 -->
+        <div class="introduce-card mt-5">
+            <h1>Recommended Server Specs & Pricing Plans</h1>
+            <div class="introduce-cards-wrapper">
+                <!-- Entry Tier -->
+                <div class="introduce-cards spec-card">
+                    <h2 class="introduce-cards-header">Entry Tier</h2>
+                    <p class="introduce-cards-header_2">t2.micro</p>
+                    <div class="spec-price">$0.0116 <span class="price-unit">/ hour</span></div>
+                    <hr class="spec-divider">
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-primary"></i> 1
+                        vCPU</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-primary"></i> 1
+                        GB RAM</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-hard-drive me-2 text-primary"></i> 8 GB
+                        SSD</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-network-wired me-2 text-primary"></i>
+                        Basic Network</p>
+                    <button class="btn btn-spec mt-auto">Select</button>
+                </div>
+                <!-- Standard Tier (Popular) -->
+                <div class="introduce-cards spec-card standard-tier" id="standard">
+                    <div class="badge-popular" id="popular">Popular</div>
+                    <h2 class="introduce-cards-header">Standard Tier</h2>
+                    <p class="introduce-cards-header_2">t2.medium</p>
+                    <div class="spec-price">$0.0464 <span class="price-unit">/ hour</span></div>
+                    <hr class="spec-divider">
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-success"></i> 2
+                        vCPUs</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-success"></i> 4
+                        GB RAM</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-hard-drive me-2 text-success"></i> 40 GB
+                        SSD</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-network-wired me-2 text-success"></i> 5
+                        Gbps Network</p>
+                    <button class="btn btn-spec active-spec mt-auto">Select</button>
+                </div>
+                <!-- GPU Tier -->
+                <div class="introduce-cards spec-card">
+                    <h2 class="introduce-cards-header">GPU Tier</h2>
+                    <p class="introduce-cards-header_2">p3.2xlarge</p>
+                    <div class="spec-price">$3.0600 <span class="price-unit">/ hour</span></div>
+                    <hr class="spec-divider">
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-cpu me-2 text-danger"></i> 8
+                        vCPUs (NVIDIA V100)</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-memory me-2 text-danger"></i> 61
+                        GB RAM</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-hard-drive me-2 text-danger"></i>
+                        1000 GB SSD</p>
+                    <p class="introduce-cards-paragraph"><i class="fa-solid fa-network-wired me-2 text-danger"></i> 10
+                        Gbps High-Performance Network</p>
+                    <button class="btn btn-spec mt-auto">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- 푸터 추가 -->
+    <footer class="footer mt-5 py-4">
+        <div class="container text-center">
+            <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
+            <div class="mt-2">
+                <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i>
+                    GitHub</a>
+                <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i> Contact
+                    Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
