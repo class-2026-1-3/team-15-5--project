@@ -23,6 +23,7 @@ def get_db_connection():
         user='root',
         password='password',
         database='busomago_ec2',
+        charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
 
