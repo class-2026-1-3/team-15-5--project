@@ -70,25 +70,126 @@
         </nav>
         <div class="header-texts">
             <h1 class="header-text">More speed. More data. More activity.</h1>
-            <h2 class="header-text" style="font-size: 1.5vw; font-weight: 400;"">빠른 속도, 많은 데이터, 더욱이 활동적이게, Serenity와 함께.</h2>
+            <h2 class="header-text" style="font-size: 1.5vw; font-weight: 400;">빠른 속도, 많은 데이터, 더욱이 활동적이게, Serenity와 함께.</h2>
         </div>
     </div>
-    <!-- 푸터 추가 -->
-    <footer class=" footer mt-5 py-4">
-                <div class="container text-center">
-                    <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
-                    <div class="mt-2">
-                        <a href="#" class="text-white-50 me-3 text-decoration-none"><i
-                                class="fa-brands fa-github me-1"></i>
-                            GitHub</a>
-                        <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i>
-                            Contact
-                            Us</a>
+
+    <!-- 인스턴스 대시보드 본문 영역 -->
+    <div class="sub-container">
+        <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+            <h2 class="dashboard-title"><i class="fa-solid fa-server me-2"></i>인스턴스 관리</h2>
+            <button class="btn btn-create-instance" data-bs-toggle="modal" data-bs-target="#createInstanceModal">
+                <i class="fa-solid fa-plus me-1"></i> 인스턴스 생성
+            </button>
+        </div>
+
+        <!-- 요약 카드 영역 -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="summary-card">
+                    <div class="summary-icon bg-success-subtle text-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">운영 중인 인스턴스</span>
+                        <h3 class="summary-value" id="runningCount">0</h3>
                     </div>
                 </div>
-                </footer>
+            </div>
+            <div class="col-md-4">
+                <div class="summary-card">
+                    <div class="summary-icon bg-primary-subtle text-primary">
+                        <i class="fa-solid fa-memory"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">총 메모리 사용량</span>
+                        <h3 class="summary-value" id="totalRam">0 GB</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="summary-card">
+                    <div class="summary-icon bg-warning-subtle text-warning">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">시간당 총 예상 비용</span>
+                        <h3 class="summary-value" id="totalCost">$0.0000</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <script src="main.js"></script>
+        <!-- 인스턴스 목록 테이블 -->
+        <div class="table-responsive instance-table-container">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">인스턴스명</th>
+                        <th scope="col">IP 주소</th>
+                        <th scope="col">서버 스펙</th>
+                        <th scope="col">시간당 비용</th>
+                        <th scope="col">상태</th>
+                        <th scope="col">생성일시</th>
+                        <th scope="col" class="text-end">작업</th>
+                    </tr>
+                </thead>
+                <tbody id="instanceList">
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-spinner fa-spin me-2 fs-4"></i>인스턴스 목록을 불러오고 있습니다...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 인스턴스 생성 모달 -->
+    <div class="modal fade" id="createInstanceModal" tabindex="-1" aria-labelledby="createInstanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createInstanceModalLabel"><i class="fa-solid fa-circle-plus me-2 text-primary"></i>새 인스턴스 생성</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createInstanceForm">
+                        <div class="mb-3">
+                            <label for="instanceName" class="form-label">인스턴스 이름</label>
+                            <input type="text" class="form-control bg-dark text-white border-secondary" id="instanceName" placeholder="예: Web-Server-01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="serverSpecSelect" class="form-label">서버 스펙 선택</label>
+                            <select class="form-select bg-dark text-white border-secondary" id="serverSpecSelect" required>
+                                <option value="" disabled selected>스펙을 선택해주세요</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="submit" form="createInstanceForm" class="btn btn-create-submit">생성하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 추가 -->
+    <footer class="footer mt-5 py-4">
+        <div class="container text-center">
+            <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
+            <div class="mt-2">
+                <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i>
+                    GitHub</a>
+                <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i>
+                    Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script src="instance.js"></script>
 </body>
 
 </html>

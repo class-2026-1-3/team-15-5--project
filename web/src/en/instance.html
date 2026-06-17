@@ -68,25 +68,126 @@
         </nav>
         <div class="header-texts">
             <h1 class="header-text">More speed. More data. More activity.</h1>
-            <h2 class="header-text" style="font-weight:200; font-size: 1.8vw;">Develop, Deploy, Manage. On your
-                high-performance cloud instances.</h2>
+            <h2 class="header-text" style="font-weight:200; font-size: 1.8vw;">Develop, Deploy, Manage. On your high-performance cloud instances.</h2>
         </div>
     </div>
-    <!-- 푸터 추가 -->
-    <footer class=" footer mt-5 py-4">
+
+    <!-- Instances Dashboard Section -->
+    <div class="sub-container">
+        <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+            <h2 class="dashboard-title"><i class="fa-solid fa-server me-2"></i>Manage Instances</h2>
+            <button class="btn btn-create-instance" data-bs-toggle="modal" data-bs-target="#createInstanceModal">
+                <i class="fa-solid fa-plus me-1"></i> Create Instance
+            </button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="summary-card">
+                    <div class="summary-icon bg-success-subtle text-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">Running Instances</span>
+                        <h3 class="summary-value" id="runningCount">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="summary-card">
+                    <div class="summary-icon bg-primary-subtle text-primary">
+                        <i class="fa-solid fa-memory"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">Total RAM</span>
+                        <h3 class="summary-value" id="totalRam">0 GB</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="summary-card">
+                    <div class="summary-icon bg-warning-subtle text-warning">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">Hourly Cost Estimate</span>
+                        <h3 class="summary-value" id="totalCost">$0.0000</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instance List Table -->
+        <div class="table-responsive instance-table-container">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">Instance Name</th>
+                        <th scope="col">IP Address</th>
+                        <th scope="col">Server Spec</th>
+                        <th scope="col">Cost/Hour</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="instanceList">
+                    <tr>
+                        <td colspan="7" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-spinner fa-spin me-2 fs-4"></i>Loading instances...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Create Instance Modal -->
+    <div class="modal fade" id="createInstanceModal" tabindex="-1" aria-labelledby="createInstanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createInstanceModalLabel"><i class="fa-solid fa-circle-plus me-2 text-primary"></i>Create New Instance</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createInstanceForm">
+                        <div class="mb-3">
+                            <label for="instanceName" class="form-label">Instance Name</label>
+                            <input type="text" class="form-control bg-dark text-white border-secondary" id="instanceName" placeholder="e.g. Web-Server-01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="serverSpecSelect" class="form-label">Select Server Spec</label>
+                            <select class="form-select bg-dark text-white border-secondary" id="serverSpecSelect" required>
+                                <option value="" disabled selected>Please select a spec</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="createInstanceForm" class="btn btn-create-submit">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5 py-4">
         <div class="container text-center">
             <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
             <div class="mt-2">
                 <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i>
                     GitHub</a>
                 <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i>
-                    Contact
-                    Us</a>
+                    Contact Us</a>
             </div>
         </div>
     </footer>
 
     <script src="main.js"></script>
+    <script src="instance.js"></script>
 </body>
 
 </html>
