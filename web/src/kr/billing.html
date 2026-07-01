@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity - 결제 및 청구 내역</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="../common.css" rel="stylesheet">
+    <link href="main.css?v=1.0" rel="stylesheet">
+    <link href="billing.css?v=1.0" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Asta+Sans:wght@300..800&family=IBM+Plex+Sans+KR&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+    <script>
+        // 페이지 렌더링 전 로그인 토큰 검증
+        if (!sessionStorage.getItem('token')) {
+            alert("로그인이 필요한 서비스입니다.");
+            window.location.href = "/index";
+        }
+    </script>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <div class='main-container'>
+        <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center" href="/kr/main">
+                    <img src="../images/logo.png" alt="logo" width="40" height="40" class="me-2 brand-logo">
+                    <span class="brand-text">Serenity</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/kr/instance"><i class="fa-solid fa-server me-1"></i> Instances</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/kr/specs"><i class="fa-solid fa-microchip me-1"></i> Specs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/kr/billing"><i class="fa-solid fa-receipt me-1"></i> Billing</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <button class="d-flex align-items-center engCase" onclick="window.location.href='/en/billing'">
+                            <i class="fa-solid fa-globe me-1"></i>
+                            Eng
+                        </button>
+                        <span class="user-profile me-3"><i class="fa-solid fa-circle-user me-1"></i>
+                            <span class="username-display">Undefined</span>
+                        </span>
+                        <a href="#" class="btn btn-logout" onclick="logout(event)">
+                            <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="header-texts">
+            <h1 class="header-text">투명한 요금 체계. 스마트한 비용 관리.</h1>
+            <h2 class="header-text" style="font-size: 1.5vw; font-weight: 400;">실시간 리소스 비용 모니터링으로 사용하는 만큼만 요금을 지불하세요.</h2>
+        </div>
+    </div>
+
+    <!-- 결제 관리 대시보드 본문 영역 -->
+    <div class="sub-container">
+        <!-- 월 청구 예상 요금 요약 배너 (금액을 제일 크게 노출) -->
+        <div class="monthly-summary-hero text-center mb-4">
+            <span class="hero-label">이번 달 청구 예상 요금</span>
+            <h1 class="hero-value" id="monthlyTotalValue">$0.00</h1>
+            <p class="hero-period" id="monthlyPeriodValue">이용 기간: --/-- ~ --/--</p>
+        </div>
+
+        <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+            <h2 class="dashboard-title"><i class="fa-solid fa-wallet me-2"></i>청구 및 요금 요약</h2>
+        </div>
+
+        <!-- 미결제 / 결제 완료 금액 요약 카드 -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="summary-card">
+                    <div class="summary-icon bg-warning-subtle-custom">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">미결제 금액 (당월 예정액 포함)</span>
+                        <h3 class="summary-value" id="pendingAmount">$0.00</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="summary-card">
+                    <div class="summary-icon bg-success-subtle-custom">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="summary-details">
+                        <span class="summary-label">누적 결제 완료 금액</span>
+                        <h3 class="summary-value" id="paidAmount">$0.00</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 청구 내역 리스트 테이블 -->
+        <h3 class="section-subtitle mb-3"><i class="fa-solid fa-list me-2"></i>상세 청구 내역</h3>
+        <div class="table-responsive billing-table-container">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">청구 기간</th>
+                        <th scope="col">인스턴스명</th>
+                        <th scope="col">산정 요금</th>
+                        <th scope="col">결제 상태</th>
+                        <th scope="col">결제일</th>
+                        <th scope="col" class="text-end">작업</th>
+                    </tr>
+                </thead>
+                <tbody id="billingList">
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-spinner fa-spin me-2 fs-4"></i>청구 및 결제 내역을 불러오고 있습니다...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 청구 세부 내역 팝업 모달 -->
+    <div class="modal fade" id="billingDetailModal" tabindex="-1" aria-labelledby="billingDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="billingDetailModalLabel">
+                        <i class="fa-solid fa-file-invoice-dollar me-2 text-primary"></i>결제 청구 영수증
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="닫기"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="receipt-container p-3">
+                        <div class="receipt-header text-center mb-4">
+                            <img src="../images/logo.png" alt="logo" width="50" class="mb-2">
+                            <h4>Serenity Cloud Infra</h4>
+                            <span class="badge" id="modalStatusBadge">결제 완료</span>
+                        </div>
+                        <hr class="border-secondary">
+                        <div class="receipt-body">
+                            <div class="row mb-2">
+                                <div class="col-5 text-muted">영수증 ID</div>
+                                <div class="col-7 text-end fw-semibold" id="modalInvoiceId">#000</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-5 text-muted">인스턴스 명</div>
+                                <div class="col-7 text-end" id="modalInstanceName">--</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-5 text-muted">인스턴스 ID</div>
+                                <div class="col-7 text-end" id="modalInstanceId">--</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-5 text-muted">청구 산정 기간</div>
+                                <div class="col-7 text-end text-light" id="modalPeriod" style="font-size: 0.82rem;">--</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-5 text-muted">결제 완료 일시</div>
+                                <div class="col-7 text-end text-light" id="modalPayTime">--</div>
+                            </div>
+                            <hr class="border-secondary my-3">
+                            <div class="row mb-1">
+                                <div class="col-6 text-muted fs-5">총 청구 금액</div>
+                                <div class="col-6 text-end fs-4 fw-bold text-primary" id="modalTotalAmount">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer class="footer mt-5 py-4">
+        <div class="container text-center">
+            <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
+            <div class="mt-2">
+                <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i> GitHub</a>
+                <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i> Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js?v=1.0"></script>
+    <script src="billing.js?v=1.0"></script>
+</body>
+
+</html>
