@@ -86,3 +86,13 @@ project/
    (PR 과정에서 생긴 일, 도커 실행 안 된 이유 등)
 
 이 외에 다른 내용을 넣고 싶다면 넣어도 됩니다.
+
+## 기여 방법
+김도진 : UX 개선
+차한별 : UI 개발 및 BE 구축
+![231](https://cdn.discordapp.com/attachments/1473599730448601134/1521779203236823140/image.png?ex=6a4612d3&is=6a44c153&hm=1f257296ffc54d7835a7186314c12b5fae4c4f4706ee87a49f7bb82b0b652911&)
+
+## 트러블 슈팅
+
+1. FE 수정시 변경사항을 확인하기 위하여 docker container 재부팅 필요
+ --> nginx가 프로젝트 src 파일을 직접 참조하게 하여 해결
