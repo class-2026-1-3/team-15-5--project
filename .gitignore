@@ -2,3 +2,5 @@ mysql/data/
 .env
 ec2.vuerd.json
 .DS_Store
+web/api/__pycache__
+*.pyc

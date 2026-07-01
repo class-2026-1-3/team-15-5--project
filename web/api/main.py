@@ -137,50 +137,6 @@ def get_billings(user_id: int):
     connection = get_db_connection()
     try:
         with connection.cursor() as cur:
-            # 먼저 해당 사용자의 빌링 데이터 개수 조회
-            cur.execute("SELECT COUNT(*) as cnt FROM billing WHERE user_id = %s", (user_id,))
-            cnt = cur.fetchone()["cnt"]
-            
-            # 빌링 데이터가 없으면 과거 3달치 더미 데이터 인서트
-            if cnt == 0:
-                # 사용자의 인스턴스 ID 조회
-                cur.execute("SELECT id FROM instance WHERE user_id = %s LIMIT 1", (user_id,))
-                inst = cur.fetchone()
-                inst_id = inst["id"] if inst else None
-                
-                # 인스턴스가 없을 경우 임의 생성
-                if not inst_id:
-                    # server_spec 조회
-                    cur.execute("SELECT id FROM server_spec LIMIT 1")
-                    spec = cur.fetchone()
-                    spec_id = spec["id"] if spec else 1
-                    
-                    # 더미 인스턴스 인서트
-                    cur.execute("""
-                        INSERT INTO instance (user_id, server_id, instance_name, ip_address, status)
-                        VALUES (%s, %s, 'Demo Web Server', '192.168.75.10', 3)
-                    """, (user_id, spec_id))
-                    connection.commit()
-                    inst_id = cur.lastrowid
-                
-                import datetime
-                now = datetime.datetime.now()
-                # 3달치 더미 데이터 인서트
-                for i in range(3):
-                    # i=0: 이번 달(진행중 PENDING), i=1: 지난 달(PAID), i=2: 지지난 달(PAID)
-                    month_start = (now - datetime.timedelta(days=30 * (i + 1))).replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-                    month_end = (month_start + datetime.timedelta(days=30)).replace(hour=23, minute=59, second=59)
-                    pay_time = month_end + datetime.timedelta(days=1)
-                    
-                    amount = round(15.45 * (3 - i), 2)
-                    status = 2 if i > 0 else 1  # 2: PAID, 1: PENDING
-                    
-                    cur.execute("""
-                        INSERT INTO billing (user_id, instance_id, amount, start_at, end_at, status, pay_at)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s)
-                    """, (user_id, inst_id, amount, month_start, month_end, status, pay_time if status == 2 else None))
-                connection.commit()
-            
             # 전체 빌링 내역 조회 (인스턴스명 조인)
             cur.execute("""
                 SELECT b.id, b.user_id, b.instance_id, b.amount, b.start_at, b.end_at, b.status, b.pay_at, i.instance_name
@@ -196,7 +152,6 @@ def get_billings(user_id: int):
                         bill[key] = bill[key].strftime("%Y-%m-%d %H:%M:%S")
             return {"success": True, "billings": billings}
     except Exception as e:
-        connection.rollback()
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         connection.close()
