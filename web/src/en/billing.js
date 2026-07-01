@@ -112,7 +112,7 @@ function renderBillingTable(billings) {
         tr.innerHTML = `
             <td class="fw-semibold">${periodText}</td>
             <td><code class="text-info">${escapeHtml(bill.instance_name || 'Deleted Instance')}</code></td>
-            <td class="fw-bold text-light">$${bill.amount.toFixed(2)}</td>
+            <td class="fw-bold text-dark">$${bill.amount.toFixed(2)}</td>
             <td>${badgeHtml}</td>
             <td><small class="text-muted">${payDate}</small></td>
             <td class="text-end">

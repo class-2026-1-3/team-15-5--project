@@ -42,13 +42,15 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
                         <li class="nav-item">
-                            <a class="nav-link" href="/en/instance"><i class="fa-solid fa-server me-1"></i> Instances</a>
+                            <a class="nav-link" href="/en/instance"><i class="fa-solid fa-server me-1"></i>
+                                Instances</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/en/specs"><i class="fa-solid fa-microchip me-1"></i> Specs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/en/billing"><i class="fa-solid fa-receipt me-1"></i> Billing</a>
+                            <a class="nav-link active" href="/en/billing"><i class="fa-solid fa-receipt me-1"></i>
+                                Billing</a>
                         </li>
                     </ul>
                     <div class="d-flex align-items-center">
@@ -67,84 +69,89 @@
             </div>
         </nav>
         <div class="header-texts">
-            <h1 class="header-text">Transparent billing. Smart cost management.</h1>
-            <h2 class="header-text" style="font-weight:200; font-size: 1.8vw;">Monitor your resource costs in real-time. Only pay for what you use.</h2>
+            <h1 class="header-text">Transparent Billing, Smartly Pay.</h1>
+            <h2 class="header-text" style="font-weight:200; font-size: 1.8vw;">Monitor your resource costs in real-time.
+                Only pay for what you use.</h2>
         </div>
     </div>
 
     <!-- Billing Dashboard Content -->
     <div class="sub-container">
-        <!-- Monthly cost summary hero banner (Displaying largest total cost) -->
-        <div class="monthly-summary-hero text-center mb-4">
-            <span class="hero-label">This Month's Estimated Charge</span>
-            <h1 class="hero-value" id="monthlyTotalValue">$0.00</h1>
-            <p class="hero-period" id="monthlyPeriodValue">Billing Cycle: --/-- to --/--</p>
-        </div>
+        <div class="introduce-card">
+            <!-- Monthly cost summary hero banner (Displaying largest total cost) -->
+            <div class="monthly-summary-hero text-center mb-4">
+                <span class="hero-label">This Month's Estimated Charge</span>
+                <h1 class="hero-value" id="monthlyTotalValue">$0.00</h1>
+                <p class="hero-period" id="monthlyPeriodValue">Billing Cycle: --/-- to --/--</p>
+            </div>
 
-        <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
-            <h2 class="dashboard-title"><i class="fa-solid fa-wallet me-2"></i>Billing & Cost Summary</h2>
-        </div>
+            <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+                <h2 class="dashboard-title"><i class="fa-solid fa-wallet me-2"></i>Billing & Cost Summary</h2>
+            </div>
 
-        <!-- Summary cards for PENDING / PAID amounts -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-6">
-                <div class="summary-card">
-                    <div class="summary-icon bg-warning-subtle-custom">
-                        <i class="fa-solid fa-hourglass-half"></i>
+            <!-- Summary cards for PENDING / PAID amounts -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="summary-card">
+                        <div class="summary-icon bg-warning-subtle-custom">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div class="summary-details">
+                            <span class="summary-label">Pending Payment (Unpaid)</span>
+                            <h3 class="summary-value" id="pendingAmount">$0.00</h3>
+                        </div>
                     </div>
-                    <div class="summary-details">
-                        <span class="summary-label">Pending Payment (Unpaid)</span>
-                        <h3 class="summary-value" id="pendingAmount">$0.00</h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="summary-card">
+                        <div class="summary-icon bg-success-subtle-custom">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="summary-details">
+                            <span class="summary-label">Paid Amount (Total History)</span>
+                            <h3 class="summary-value" id="paidAmount">$0.00</h3>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="summary-card">
-                    <div class="summary-icon bg-success-subtle-custom">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                    <div class="summary-details">
-                        <span class="summary-label">Paid Amount (Total History)</span>
-                        <h3 class="summary-value" id="paidAmount">$0.00</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Billing History List Table -->
-        <h3 class="section-subtitle mb-3"><i class="fa-solid fa-list me-2"></i>Invoice History</h3>
-        <div class="table-responsive billing-table-container">
-            <table class="table table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th scope="col">Billing Cycle</th>
-                        <th scope="col">Instance Name</th>
-                        <th scope="col">Calculated Amount</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Payment Date</th>
-                        <th scope="col" class="text-end">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="billingList">
-                    <tr>
-                        <td colspan="6" class="text-center py-5 text-muted">
-                            <i class="fa-solid fa-spinner fa-spin me-2 fs-4"></i>Loading billing details...
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Billing History List Table -->
+            <h3 class="section-subtitle mb-3"><i class="fa-solid fa-list me-2"></i>Invoice History</h3>
+            <div class="table-responsive billing-table-container">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Billing Cycle</th>
+                            <th scope="col">Instance Name</th>
+                            <th scope="col">Calculated Amount</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Payment Date</th>
+                            <th scope="col" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="billingList">
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="fa-solid fa-spinner fa-spin me-2 fs-4"></i>Loading billing details...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <!-- Invoice Detail Modal -->
-    <div class="modal fade" id="billingDetailModal" tabindex="-1" aria-labelledby="billingDetailModalLabel" aria-hidden="true">
+    <div class="modal fade" id="billingDetailModal" tabindex="-1" aria-labelledby="billingDetailModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-white">
                 <div class="modal-header">
                     <h5 class="modal-title" id="billingDetailModalLabel">
                         <i class="fa-solid fa-file-invoice-dollar me-2 text-primary"></i>Invoice Details
                     </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="receipt-container p-3">
@@ -169,7 +176,8 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-5 text-muted">Billing Period</div>
-                                <div class="col-7 text-end text-light" id="modalPeriod" style="font-size: 0.85rem;">--</div>
+                                <div class="col-7 text-end text-light" id="modalPeriod" style="font-size: 0.85rem;">--
+                                </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-5 text-muted">Payment Date</div>
@@ -195,8 +203,10 @@
         <div class="container text-center">
             <span class="text-white-50">© 2026 Serenity Cloud Infrastructure. All rights reserved.</span>
             <div class="mt-2">
-                <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i> GitHub</a>
-                <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i> Contact Us</a>
+                <a href="#" class="text-white-50 me-3 text-decoration-none"><i class="fa-brands fa-github me-1"></i>
+                    GitHub</a>
+                <a href="#" class="text-white-50 text-decoration-none"><i class="fa-solid fa-envelope me-1"></i> Contact
+                    Us</a>
             </div>
         </div>
     </footer>
