@@ -146,7 +146,7 @@ async function handleCreateInstance(e, userId) {
     e.preventDefault();
     const nameInput = document.getElementById('instanceName');
     const specSelect = document.getElementById('serverSpecSelect');
-    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const submitBtn = document.querySelector('#createInstanceModal button[type="submit"]');
 
     const instanceName = nameInput.value.trim();
     const serverId = parseInt(specSelect.value, 10);
@@ -171,11 +171,11 @@ async function handleCreateInstance(e, userId) {
         if (response.ok && result.success) {
             // Hide modal
             const modalEl = document.getElementById('createInstanceModal');
-            const modal = bootstrap.Modal.getInstance(modalEl);
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
             modal.hide();
 
             // Reset form
-            createForm.reset();
+            e.target.reset();
 
             // Refresh list
             await loadInstances(userId);

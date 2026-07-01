@@ -146,7 +146,7 @@ async function handleCreateInstance(e, userId) {
     e.preventDefault();
     const nameInput = document.getElementById('instanceName');
     const specSelect = document.getElementById('serverSpecSelect');
-    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const submitBtn = document.querySelector('#createInstanceModal button[type="submit"]');
 
     const instanceName = nameInput.value.trim();
     const serverId = parseInt(specSelect.value, 10);
@@ -171,11 +171,11 @@ async function handleCreateInstance(e, userId) {
         if (response.ok && result.success) {
             // 모달 닫기
             const modalEl = document.getElementById('createInstanceModal');
-            const modal = bootstrap.Modal.getInstance(modalEl);
+            const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
             modal.hide();
 
             // 폼 초기화
-            createForm.reset();
+            e.target.reset();
 
             // 목록 리프레시
             await loadInstances(userId);

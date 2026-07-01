@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:6974';
+const API_BASE_URL = `${window.location.protocol}//${window.location.hostname}:6974`;
 
 function logout(event) {
     event.preventDefault();

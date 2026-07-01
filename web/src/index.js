@@ -42,7 +42,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     const passwordVal = document.getElementById('password').value;
 
     try {
-        const response = await fetch('http://localhost:6974/login', {
+        const response = await fetch(`${window.location.protocol}//${window.location.hostname}:6974/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

@@ -46,16 +46,12 @@ def login(data: LoginRequest):
     finally:
         connection.close()
 
-class SpecRequest(BaseModel):
-    id:int
-    pr_name:str
-
 @app.get("/spec")
-def specs(data: SpecRequest):
+def specs(id: int, pr_name: str):
     connection = get_db_connection()
     try:
         with connection.cursor() as cur:
-            cur.execute("SELECT * FROM server_spec WHERE id = %s AND pr_name = %s", (data.id, data.pr_name))
+            cur.execute("SELECT * FROM server_spec WHERE id = %s AND pr_name = %s", (id, pr_name))
             spec = cur.fetchone()
             if spec:
                 return {"success":True,"spec":spec}
