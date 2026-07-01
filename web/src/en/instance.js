@@ -1,6 +1,3 @@
-// API URL Config
-const API_BASE_URL = 'http://localhost:6974';
-
 // Extract user_id from token
 function getUserId() {
     const token = sessionStorage.getItem('token');
@@ -81,47 +78,52 @@ function renderInstances(instances) {
         // Status badge
         let statusBadge = '';
         if (inst.status === 1) {
-            statusBadge = `<span class="badge bg-success"><i class="fa-solid fa-circle-play me-1"></i>Running</span>`;
+            statusBadge = `<span class="badge-status badge-active"><span class="pulse-green"></span>Running</span>`;
         } else if (inst.status === 2) {
-            statusBadge = `<span class="badge bg-warning text-dark"><i class="fa-solid fa-circle-pause me-1"></i>Stopped</span>`;
+            statusBadge = `<span class="badge-status badge-paused"><i class="fa-solid fa-circle-pause me-1"></i>Stopped</span>`;
         } else {
-            statusBadge = `<span class="badge bg-danger"><i class="fa-solid fa-circle-stop me-1"></i>Down</span>`;
+            statusBadge = `<span class="badge-status badge-stopped"><i class="fa-solid fa-circle-stop me-1"></i>Down</span>`;
         }
 
         // Control buttons
         let actionButtons = '';
         if (inst.status === 1) {
-            // Running: can 'Stop(2)' or 'Terminate(3)'
             actionButtons = `
-                <button class="btn btn-sm btn-action-control me-1" onclick="changeStatus(${inst.id}, 2, 'stop')">
-                    <i class="fa-solid fa-stop me-1"></i> Stop
+                <button class="btn btn-action-control me-1" onclick="changeStatus(${inst.id}, 2, 'stop')" title="Stop">
+                    <i class="fa-solid fa-pause me-1"></i> Stop
                 </button>
-                <button class="btn btn-sm btn-action-terminate" onclick="changeStatus(${inst.id}, 3, 'terminate')">
+                <button class="btn btn-action-terminate" onclick="changeStatus(${inst.id}, 3, 'terminate')" title="Terminate">
                     <i class="fa-solid fa-trash me-1"></i> Terminate
                 </button>
             `;
         } else {
-            // Down/Stopped: can 'Start(1)' or 'Terminate(3)'
             actionButtons = `
-                <button class="btn btn-sm btn-action-control me-1 text-success" onclick="changeStatus(${inst.id}, 1, 'start')">
+                <button class="btn btn-action-control me-1 text-success" onclick="changeStatus(${inst.id}, 1, 'start')" title="Start">
                     <i class="fa-solid fa-play me-1"></i> Start
                 </button>
-                <button class="btn btn-sm btn-action-terminate" onclick="changeStatus(${inst.id}, 3, 'terminate')">
+                <button class="btn btn-action-terminate" onclick="changeStatus(${inst.id}, 3, 'terminate')" title="Terminate">
                     <i class="fa-solid fa-trash me-1"></i> Terminate
                 </button>
             `;
         }
 
         tr.innerHTML = `
-            <td class="fw-bold">${escapeHtml(inst.instance_name)}</td>
-            <td><code>${inst.ip_address}</code></td>
+            <td class="fw-bold text-dark">${escapeHtml(inst.instance_name)}</td>
             <td>
-                <div class="fw-semibold">${inst.server_name}</div>
-                <small class="text-white-50">${inst.pr_name} / ${inst.ram_gb}GB RAM</small>
+                <div class="ip-address-container">
+                    <code>${inst.ip_address}</code>
+                    <button class="btn-copy-ip" onclick="copyToClipboard('${inst.ip_address}')" title="Copy IP">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
             </td>
-            <td>$${inst.cost.toFixed(4)}</td>
+            <td>
+                <div class="fw-semibold text-dark">${inst.server_name}</div>
+                <small class="text-muted" style="font-size: 0.75rem;">${inst.pr_name} / ${inst.ram_gb}GB RAM</small>
+            </td>
+            <td class="fw-semibold text-secondary">$${inst.cost.toFixed(4)}</td>
             <td>${statusBadge}</td>
-            <td class="text-white-50"><small>${inst.created_at}</small></td>
+            <td class="text-muted"><small>${inst.created_at}</small></td>
             <td class="text-end">${actionButtons}</td>
         `;
         instanceList.appendChild(tr);
@@ -226,4 +228,66 @@ function escapeHtml(str) {
             '"': '&quot;'
         }[tag] || tag)
     );
+}
+
+// Clipboard copy helper function
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToastMessage('IP address copied to clipboard: ' + text);
+        }).catch(err => {
+            console.error('Failed to copy IP:', err);
+            fallbackCopyText(text);
+        });
+    } else {
+        fallbackCopyText(text);
+    }
+}
+
+// Fallback copy function for legacy browsers
+function fallbackCopyText(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        showToastMessage('IP address copied to clipboard: ' + text);
+    } catch (err) {
+        console.error('Failed to copy IP:', err);
+    }
+    document.body.removeChild(textArea);
+}
+
+// Show mini toast notification message
+function showToastMessage(message) {
+    let toast = document.getElementById('copy-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'copy-toast';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '24px';
+        toast.style.right = '24px';
+        toast.style.backgroundColor = '#10b981';
+        toast.style.color = '#fff';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '8px';
+        toast.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.3)';
+        toast.style.zIndex = '9999';
+        toast.style.fontFamily = 'Inter, sans-serif';
+        toast.style.fontWeight = '600';
+        toast.style.fontSize = '0.9rem';
+        toast.style.transition = 'opacity 0.3s ease';
+        toast.style.opacity = '0';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+    }, 2500);
 }

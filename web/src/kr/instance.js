@@ -1,6 +1,3 @@
-// API URL 설정
-const API_BASE_URL = 'http://localhost:6974';
-
 // token에서 user_id 추출
 function getUserId() {
     const token = sessionStorage.getItem('token');
@@ -81,47 +78,52 @@ function renderInstances(instances) {
         // 상태 배지 생성
         let statusBadge = '';
         if (inst.status === 1) {
-            statusBadge = `<span class="badge bg-success"><i class="fa-solid fa-circle-play me-1"></i>작동 중</span>`;
+            statusBadge = `<span class="badge-status badge-active"><span class="pulse-green"></span>작동 중</span>`;
         } else if (inst.status === 2) {
-            statusBadge = `<span class="badge bg-warning text-dark"><i class="fa-solid fa-circle-pause me-1"></i>중지됨</span>`;
+            statusBadge = `<span class="badge-status badge-paused"><i class="fa-solid fa-circle-pause me-1"></i>중지됨</span>`;
         } else {
-            statusBadge = `<span class="badge bg-danger"><i class="fa-solid fa-circle-stop me-1"></i>꺼짐</span>`;
+            statusBadge = `<span class="badge-status badge-stopped"><i class="fa-solid fa-circle-stop me-1"></i>꺼짐</span>`;
         }
 
         // 제어 버튼들 생성
         let actionButtons = '';
         if (inst.status === 1) {
-            // 작동 중일 때는 '중지(2)'와 '종료(3)'만 가능
             actionButtons = `
-                <button class="btn btn-sm btn-action-control me-1" onclick="changeStatus(${inst.id}, 2, '중지')">
-                    <i class="fa-solid fa-stop me-1"></i> 중지
+                <button class="btn btn-action-control me-1" onclick="changeStatus(${inst.id}, 2, '중지')" title="중지">
+                    <i class="fa-solid fa-pause me-1"></i> 중지
                 </button>
-                <button class="btn btn-sm btn-action-terminate" onclick="changeStatus(${inst.id}, 3, '영구 종료')">
+                <button class="btn btn-action-terminate" onclick="changeStatus(${inst.id}, 3, '영구 종료')" title="영구 종료">
                     <i class="fa-solid fa-trash me-1"></i> 종료
                 </button>
             `;
         } else {
-            // 꺼짐/중지 상태일 때는 '시작(1)'과 '종료(3)' 가능
             actionButtons = `
-                <button class="btn btn-sm btn-action-control me-1 text-success" onclick="changeStatus(${inst.id}, 1, '시작')">
+                <button class="btn btn-action-control me-1 text-success" onclick="changeStatus(${inst.id}, 1, '시작')" title="시작">
                     <i class="fa-solid fa-play me-1"></i> 시작
                 </button>
-                <button class="btn btn-sm btn-action-terminate" onclick="changeStatus(${inst.id}, 3, '영구 종료')">
+                <button class="btn btn-action-terminate" onclick="changeStatus(${inst.id}, 3, '영구 종료')" title="영구 종료">
                     <i class="fa-solid fa-trash me-1"></i> 종료
                 </button>
             `;
         }
 
         tr.innerHTML = `
-            <td class="fw-bold">${escapeHtml(inst.instance_name)}</td>
-            <td><code>${inst.ip_address}</code></td>
+            <td class="fw-bold text-dark">${escapeHtml(inst.instance_name)}</td>
             <td>
-                <div class="fw-semibold">${inst.server_name}</div>
-                <small class="text-white-50">${inst.pr_name} / ${inst.ram_gb}GB RAM</small>
+                <div class="ip-address-container">
+                    <code>${inst.ip_address}</code>
+                    <button class="btn-copy-ip" onclick="copyToClipboard('${inst.ip_address}')" title="IP 복사">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
             </td>
-            <td>$${inst.cost.toFixed(4)}</td>
+            <td>
+                <div class="fw-semibold text-dark">${inst.server_name}</div>
+                <small class="text-muted" style="font-size: 0.75rem;">${inst.pr_name} / ${inst.ram_gb}GB RAM</small>
+            </td>
+            <td class="fw-semibold text-secondary">$${inst.cost.toFixed(4)}</td>
             <td>${statusBadge}</td>
-            <td class="text-white-50"><small>${inst.created_at}</small></td>
+            <td class="text-muted"><small>${inst.created_at}</small></td>
             <td class="text-end">${actionButtons}</td>
         `;
         instanceList.appendChild(tr);
@@ -226,4 +228,66 @@ function escapeHtml(str) {
             '"': '&quot;'
         }[tag] || tag)
     );
+}
+
+// 클립보드 복사 헬퍼 함수
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToastMessage('IP 주소가 복사되었습니다: ' + text);
+        }).catch(err => {
+            console.error('IP 복사 실패:', err);
+            fallbackCopyText(text);
+        });
+    } else {
+        fallbackCopyText(text);
+    }
+}
+
+// 구형 브라우저 호환용 복사
+function fallbackCopyText(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        showToastMessage('IP 주소가 복사되었습니다: ' + text);
+    } catch (err) {
+        console.error('IP 복사 실패:', err);
+    }
+    document.body.removeChild(textArea);
+}
+
+// 미니 토스트 메시지 알림 표시
+function showToastMessage(message) {
+    let toast = document.getElementById('copy-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'copy-toast';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '24px';
+        toast.style.right = '24px';
+        toast.style.backgroundColor = '#10b981';
+        toast.style.color = '#fff';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '8px';
+        toast.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.3)';
+        toast.style.zIndex = '9999';
+        toast.style.fontFamily = 'Inter, sans-serif';
+        toast.style.fontWeight = '600';
+        toast.style.fontSize = '0.9rem';
+        toast.style.transition = 'opacity 0.3s ease';
+        toast.style.opacity = '0';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+    }, 2500);
 }

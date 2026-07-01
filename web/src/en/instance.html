@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../common.css" rel="stylesheet">
-    <link href="main.css" rel="stylesheet">
-    <link href="instance.css" rel="stylesheet">
+    <link href="main.css?v=1.0" rel="stylesheet">
+    <link href="instance.css?v=1.6" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,16 +77,13 @@
     <div class="sub-container">
         <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
             <h2 class="dashboard-title"><i class="fa-solid fa-server me-2"></i>Manage Instances</h2>
-            <button class="btn btn-create-instance" data-bs-toggle="modal" data-bs-target="#createInstanceModal">
-                <i class="fa-solid fa-plus me-1"></i> Create Instance
-            </button>
         </div>
 
         <!-- Summary Cards -->
         <div class="row g-3 mb-4">
             <div class="col-md-4">
                 <div class="summary-card">
-                    <div class="summary-icon bg-success-subtle text-success">
+                    <div class="summary-icon bg-success-subtle-custom">
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <div class="summary-details">
@@ -97,7 +94,7 @@
             </div>
             <div class="col-md-4">
                 <div class="summary-card">
-                    <div class="summary-icon bg-primary-subtle text-primary">
+                    <div class="summary-icon bg-primary-subtle-custom">
                         <i class="fa-solid fa-memory"></i>
                     </div>
                     <div class="summary-details">
@@ -108,7 +105,7 @@
             </div>
             <div class="col-md-4">
                 <div class="summary-card">
-                    <div class="summary-icon bg-warning-subtle text-warning">
+                    <div class="summary-icon bg-warning-subtle-custom">
                         <i class="fa-solid fa-dollar-sign"></i>
                     </div>
                     <div class="summary-details">
@@ -117,6 +114,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Create Instance Button Section (below cards) -->
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-create-instance" data-bs-toggle="modal" data-bs-target="#createInstanceModal">
+                <i class="fa-solid fa-plus me-1"></i> Create Instance
+            </button>
         </div>
 
         <!-- Instance List Table -->
@@ -192,8 +196,8 @@
         </div>
     </footer>
 
-    <script src="main.js"></script>
-    <script src="instance.js"></script>
+    <script src="main.js?v=1.0"></script>
+    <script src="instance.js?v=1.5"></script>
 </body>
 
 </html>
